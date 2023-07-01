@@ -1,0 +1,37 @@
+<mat-toolbar style="min-height:75px; background-color: white;">
+    <img src="assets/logo3.png" routerLink="/admin/dashboard" alt="Logo de la web" height="200px" width="200px">
+
+    <button mat-button class="ms-3" routerLink="/">Home</button>
+    <button mat-button class="ms-3" routerLink="/admin/books">Books</button>
+    <button mat-button class="ms-3" routerLink="/admin/users">Users</button>
+    <button mat-button class="ms-3" routerLink="/admin/categories">Categories</button>
+    <button mat-button class="ms-3" routerLink="/admin/authors">Authors</button>
+    <button mat-button class="ms-3" routerLink="/admin/contacts">Contact</button>
+    <button mat-button class="ms-3" routerLink="/admin/binnacles">Binnacle</button>
+
+
+    <span class="spacer"></span>
+    <button matTooltip="Settings" mat-button class="ms-3" [mat-menu-trigger-for]="userMenu">
+        <mat-icon>person</mat-icon> Marco Araya
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+        <mat-button mat-menu-item>
+            <mat-icon>person</mat-icon> Profile
+        </mat-button>
+        <mat-button mat-menu-item>
+            <mat-icon>settings</mat-icon> Account settings
+        </mat-button>
+        <mat-button mat-menu-item>
+            <mat-icon>security</mat-icon> Security
+        </mat-button>
+        <mat-divider></mat-divider>
+        <mat-button mat-menu-item>
+            <mat-icon>logout</mat-icon> Logout
+        </mat-button>
+    </mat-menu>
+</mat-toolbar>
+<div class="pt-5 container">
+    <router-outlet></router-outlet>
+</div>
+

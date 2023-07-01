@@ -1,0 +1,119 @@
+<div *ngIf="form">
+    <h2>Editar libro</h2>
+    <div class="mt-5 alert alert-danger" *ngIf="errors">
+        <ul>
+            <li *ngFor="let error of errors">{{error}}</li>
+        </ul>
+    </div>
+
+    <!-- Con *ngIf="form" quitamos el error cuando form sea diferente a nulo, falso, 0, undefined -->
+    <div class="row">
+        <div class="col-md-7">
+            <!-- Con formControlName se mapea el nombre atributo de Book en new-book component.ts -->
+            <!-- El mat-label si es obligatorio usarlo debato de un mat-form-field, pero el mat-error no importa, puede estar debajo de un div -->
+            <form autocomplete="off" class="mt-5" [formGroup]="form" (ngSubmit)="update()">
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                    <mat-label>Título</mat-label>
+                    <input matInput type="text" placeholder="Título" formControlName="title" (keyup)="generateSlug()">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('title','required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('title','minlength')">
+                            Este campo debe tener al menos 3 caracteres
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('title','maxlength')">
+                            Este campo debe tener como máximo 100 caracteres
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                    <mat-label>Slug</mat-label>
+                    <input matInput type="text" placeholder="Slug" formControlName="slug">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('slug','required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('slug','pattern')">
+                            El valor es inválido
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput placeholder="Descripción" formControlName="desc"></textarea>
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('desc','required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                    <mat-label>Precio</mat-label>
+                    <input matInput type="number" step="0.01" placeholder="Precio" formControlName="price">
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('price','required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                        <ng-container *ngIf="controlHasError('price','min')">
+                            El valor debe ser 0 como mínimo
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="mb-3">
+                    <label class="d-block mb-1 text-muted">Portada</label>
+                    <!-- En el input usamos #coverInputFile, al hacer click en el boton este le pasa el evento/click al coverInputFile del input -->
+                    <button type="button" mat-raised-button matTooltip="Subir portada"
+                        (click)="coverInputFile.click()">Seleccionar archivo</button>
+
+                    <div class="mt-2 text-muted" *ngIf="form.controls['coverPath'].valid">
+                        El archivo subido es: {{ form.controls['coverPath'].value }}
+                    </div>
+
+                    <mat-error style="font-size: 12px;" *ngIf="controlHasError('coverPath','required')">
+                        Este campo es obligatorio
+                    </mat-error>
+
+                    <input type="file" class="d-none" #coverInputFile accept="image/*"
+                        (change)="uploadFile($event,'coverPath')">
+                </div>
+
+                <div class="mb-3">
+                    <label class="d-block mb-1 text-muted">Archivo PDF</label>
+                    <!-- En el input usamos #coverInputFile, al hacer click en el boton este le pasa el evento/click al coverInputFile del input -->
+                    <button type="button" mat-raised-button matTooltip="Subir PDF"
+                        (click)="fileInputFile.click()">Seleccionar archivo</button>
+
+                    <div class="mt-2 text-muted" *ngIf="form.controls['filePath'].valid">
+                        El archivo subido es: {{ form.controls['filePath'].value }}
+                    </div>
+
+                    <mat-error style="font-size: 12px;" *ngIf="controlHasError('filePath','required')">
+                        Este campo es obligatorio
+                    </mat-error>
+
+                    <input type="file" class="d-none" #fileInputFile accept="application/pdf*"
+                        (change)="uploadFile($event,'filePath')">
+                </div>
+
+                <div class="text-end">
+                    <button mat-button routerLink="/admin/books" matTooltip="Regresar"> Cancelar </button>
+                    <button mat-raised-button color="primary" class="ms-2" matTooltip="Crear libro"> Actualizar libro
+                    </button>
+                </div><br>
+            </form>
+        </div>
+
+        <div class="mt-5 text-muted col-md-4 text-center">
+            <div *ngIf="form.controls['coverPath'].value; else noCoverPathMessage">
+                <img [src]="form.controls['coverPath'].value | apiImg" alt="" class="img-thumbnail">
+            </div>
+
+            <ng-template #noCoverPathMessage>
+                No se ha seleccionado la portada
+            </ng-template>
+
+        </div>
+    </div>
+</div>

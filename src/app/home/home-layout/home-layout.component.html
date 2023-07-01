@@ -1,0 +1,84 @@
+<mat-toolbar style="min-height:75px; background-color: white;">
+    <img src="assets/logo3.png" routerLink="/" alt="Logo de la web" height="200px" width="200px">
+
+    <button mat-button class="ms-3" routerLink="/">Home</button>
+    <button mat-button class="ms-3" routerLink="/books">Books</button>
+    <button mat-button class="ms-3" routerLink="">Learning</button>
+    <button mat-button class="ms-3" routerLink="/admin/books">Administration</button>
+    <button mat-button class="ms-3" routerLink="">Contact Us</button>
+
+
+    <span class="spacer"></span>
+
+    <button routerLink="/wishlist" matTooltip="Wishlist" mat-icon-button class="me-2" [matBadge]="wishListItems.length"
+    matBadgePosition="above after" matBadgeColor="primary">
+        <mat-icon>favorite</mat-icon>
+    </button>
+
+    <!-- Esta es la funcionalidad del carrito a nivel UI -->
+    <button matTooltip="Cart" mat-icon-button class="me-2" [mat-menu-trigger-for]="cartMenu" [matBadge]="cartItems.length"
+        matBadgePosition="above after" matBadgeColor="primary">
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+    <mat-menu #cartMenu="matMenu">
+        <ng-container *ngIf="cartItems.length; else cartIsEmptyButton">
+            <mat-button mat-menu-item *ngFor="let book of cartItems">
+                <div class="d-flex gap-3 mb-3">
+                    <img [routerLink]="['/books', book.slug]" [src]="book.coverPath | apiImg" alt="" class="mw-96px">
+                    <div>
+                        <div> {{ book.title }} </div>
+                        <p> {{ book.price | currency }} </p>
+                    </div>
+                </div>
+            </mat-button>
+        </ng-container>
+
+        <ng-template #cartIsEmptyButton>
+            <mat-button mat-menu-item class="justify-content-center">
+                The cart is empty
+            </mat-button>
+        </ng-template>
+
+        <!-- Calcular el total del precio -->
+        <ng-container *ngIf="cartItems.length > 0">
+            <ng-container *ngIf="cartItems[0].price">
+                <mat-divider></mat-divider>
+                <mat-button mat-menu-item class="justify-content-center">
+                    <div>
+                        <span class="fw-bold">Total: </span>
+                        <span class="fw-bold">{{ calculateTotalPrice() | currency }}</span>
+                    </div>
+                </mat-button>
+                <mat-divider></mat-divider>
+                <mat-button mat-menu-item class="justify-content-center" routerLink="/cart">
+                    <mat-icon>shopping_cart</mat-icon> Go to cart
+                </mat-button>
+            </ng-container>
+        </ng-container>
+    </mat-menu>
+
+    <button matTooltip="Account" mat-button class="ms-3" [mat-menu-trigger-for]="userMenu">
+        <mat-icon>person</mat-icon> Marco Araya
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+        <mat-button mat-menu-item>
+            <mat-icon>person</mat-icon> Profile
+        </mat-button>
+        <mat-button mat-menu-item>
+            <mat-icon>history</mat-icon> Shopping history
+        </mat-button>
+        <mat-button mat-menu-item>
+            <mat-icon>settings</mat-icon> Account settings
+        </mat-button>
+        <mat-button mat-menu-item>
+            <mat-icon>security</mat-icon> Security
+        </mat-button>
+        <mat-divider></mat-divider>
+        <mat-button mat-menu-item>
+            <mat-icon>logout</mat-icon> Logout
+        </mat-button>
+    </mat-menu>
+</mat-toolbar>
+<router-outlet></router-outlet>

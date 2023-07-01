@@ -1,0 +1,71 @@
+<div class="container">
+    <h1 class="fw-bold mt-5">Cart</h1>
+    <div class="row mt-3 justify-content-between">
+        <div class="col-md-6">
+            <div *ngIf="items.length; else cartIsEmptyButton">
+                <p class="fw-bold mt-2" *ngIf="items.length == 1">{{ items.length }} course in the cart
+
+                </p>
+                <p class="fw-bold mt-2" *ngIf="items.length > 1">{{ items.length }} courses in the cart
+
+                </p>
+                <div *ngFor="let item of items">
+                    <mat-divider class="mb-3"></mat-divider>
+                    <div class="d-flex gap-3 mb-3">
+                        <img [src]="item.coverPath | apiImg" alt="" class="mw-96px">
+                        <div>
+                            <div class="fw-bold"> {{ item.title }} </div>
+                            <p class="mt-3 fw-bold"> {{ item.price | currency }} </p>
+                            <button mat-button color="warn" (click)="remove(item)">
+                                Remove
+                            </button>
+                            <button mat-button color="primary" (click)="addToWishlist(item)">
+                                Move to wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="wishlist.length;">
+                <p class="fw-bold mt-2">Recently added to wishlist
+                    
+                </p>
+                <mat-divider class="mb-3"></mat-divider>
+                <div *ngFor="let itemWishlist of wishlist">
+                    <div class="d-flex gap-3 mb-3">
+                        <img [src]="itemWishlist.coverPath | apiImg" alt="" class="mw-96px">
+                        <div>
+                            <div class="fw-bold"> {{ itemWishlist.title }} </div>
+                            <p class="mt-3 fw-bold"> {{ itemWishlist.price | currency }} </p>
+                            <button mat-button color="warn" (click)="removeFromWishlist(itemWishlist)">
+                                Remove
+                            </button>
+                            <button mat-button color="primary" (click)="addToCart(itemWishlist)">
+                                Move to cart
+                            </button>
+                        </div>
+                    </div>
+                    <mat-divider class="mb-3"></mat-divider>
+                </div>
+            </div>
+    
+            <ng-template #cartIsEmptyButton>
+                <button mat-button color="primary" class="justify-content-center">
+                    The cart is empty
+                </button>
+            </ng-template>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <h3 class="fw-bold">Total</h3>
+            <div class="fs-2 fw-bold my-3 text-danger"> {{ total | currency }} </div> 
+            <button class="w-100" mat-raised-button color="primary"> 
+                <mat-icon>paypal</mat-icon>
+                Pagar con PayPal 
+            </button> 
+            <button class="w-100 mt-3" mat-raised-button color="basic" routerLink="/books"> 
+                Seguir comprando 
+            </button>
+        </div>
+    </div>
+</div>

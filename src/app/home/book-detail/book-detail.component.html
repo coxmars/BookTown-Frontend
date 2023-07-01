@@ -1,0 +1,50 @@
+<div class="container" *ngIf="book">
+    <div class="row mt-5">
+        <div class="col-md-6 px-5 mb-5">
+            <img [src]="book.coverPath | apiImg" alt="" class="w-100">
+        </div>
+        <div class="col-md-6">
+            <h1 class="fw-bold"> {{ book.title }}</h1>
+            <p style="text-align: justify;"> {{ book.desc }}</p>
+            <div class="mb-2">
+                <span class="fw-bold">Autor:</span>
+                <span class="ms-1">John Doe</span>
+            </div>
+            <div class="mb-2">
+                <span class="fw-bold">Fecha publicación:</span>
+                <span class="ms-1">2023</span>
+            </div>
+            <div>
+                <span class="fw-bold">Formato:</span>
+                <span class="ms-1">PDF</span>
+            </div>
+            <div class="mt-3">
+                <span class="fs-3 fw-bold text-danger display-5">
+                    {{ book.price | currency }}
+                </span>
+            </div>
+            <mat-divider class="mt-3"></mat-divider>
+            <div class="mt-4">
+                <button class="cart-button" matTooltip="Add to cart" mat-raised-button color="warn" *ngIf="!bookAlreadyExistsInCart(book); else removeButton"
+                    (click)="addBookToCart(book)">
+                    <mat-icon>add_shopping_cart</mat-icon>Add
+                </button>
+                <button class="wishlist-button" matTooltip="Add to wishlist" mat-fab
+                    *ngIf="!bookAlreadyExistsInWishList(book); else removeWishlist" (click)="addBookToWishList(book)">
+                    <mat-icon class="wishlist-add-icon">favorite</mat-icon>
+                </button>
+                <ng-template #removeButton>
+                    <button class="cart-button" matTooltip="Remove from cart" mat-raised-button color="primary" (click)="removeBookFromCart(book)">
+                        <mat-icon>remove_shopping_cart</mat-icon>Remove
+                    </button>
+                </ng-template>
+                <ng-template #removeWishlist>
+                    <button class="wishlist-button" matTooltip="Remove from wishlist" mat-fab
+                        (click)="removeBookFromWishList(book)">
+                        <mat-icon class="wishlist-remove-icon">favorite</mat-icon>
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

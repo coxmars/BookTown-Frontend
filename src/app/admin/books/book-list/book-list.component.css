@@ -1,0 +1,14 @@
+.button-container button {
+    margin-right: 10px;
+}
+
+/* Por si queremos cambiar el color de los botones, se deben usar clases en el html y no el atributo color
+.mat-mdc-raised-button.color-button { 
+    background-color: red; 
+    color: white; 
+}
+*/
+
+.description {
+    width: 400px; /* Ajusta el ancho según tus necesidades */
+}

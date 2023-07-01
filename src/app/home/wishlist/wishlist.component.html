@@ -1,0 +1,16 @@
+<div class="container mt-5">
+    <h1 class="fw-bold">Wishlist</h1>
+
+    <div>
+        <div class="row mt-5" *ngIf="wishlist.length; else wishlistIsEmptyButton">
+            <div class="col-md-4 mb-3" *ngFor="let book of wishlist">
+                <app-book-card [book]="book"></app-book-card>
+            </div>
+        </div>
+        <ng-template #wishlistIsEmptyButton>
+            <button mat-button color="primary" class="justify-content-center">
+                The wishlist is empty
+            </button>
+        </ng-template>
+    </div>
+</div>

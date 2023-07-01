@@ -1,0 +1,31 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    width: 70%;
+    margin-left: 10px;
+}
+
+.button-favorite-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+}
+
+.wishlist-button {
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.wishlist-add-icon {
+    color: gray;
+}
+
+.wishlist-remove-icon {
+    color: #FA5252;
+}

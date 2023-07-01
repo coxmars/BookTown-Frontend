@@ -1,0 +1,19 @@
+.wishlist-button {
+    margin-left: 20px;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.cart-button {
+    width: 200px;
+}
+
+.wishlist-add-icon {
+    color: gray;
+}
+
+.wishlist-remove-icon {
+    color: #FA5252;
+}

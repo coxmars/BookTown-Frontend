@@ -1,0 +1,32 @@
+<mat-card class="book-card mb-3">
+    <img mat-card-img [src]="book.coverPath | apiImg" alt="" height="300px">
+    <mat-card-content class="mt-2">
+        <a class="h5" [routerLink]="['/books', book.slug]">{{ book.title }}</a>
+        <p class="text-muted" style="margin-bottom: 8px; text-align: justify;">{{ book.desc | slice:0:100 }} ...</p>
+        <p class="fw-bold">{{ book.price | currency }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="button-container">
+            <button matTooltip="Add to cart" class="w-100" mat-raised-button color="warn"
+                *ngIf="!bookAlreadyExistsInCart(book); else removeButton" (click)="addBookToCart(book)">
+                <mat-icon>add_shopping_cart</mat-icon>Add
+            </button>
+        </div>
+        <div class="button-favorite-container mb-3">
+            <button class="wishlist-button" matTooltip="Add to wishlist" mat-fab 
+            *ngIf="!bookAlreadyExistsInWishList(book); else removeWishlist" (click)="addBookToWishList(book)">
+                <mat-icon class="wishlist-add-icon">favorite</mat-icon>
+            </button>
+        </div>
+        <ng-template #removeButton>
+            <button color="primary" matTooltip="Remove from cart" class="w-100" mat-raised-button (click)="removeBookFromCart(book)">
+                <mat-icon>remove_shopping_cart</mat-icon>Remove
+            </button>
+        </ng-template>
+        <ng-template #removeWishlist>
+            <button class="wishlist-button" matTooltip="Remove from wishlist" mat-fab (click)="removeBookFromWishList(book)">
+                <mat-icon class="wishlist-remove-icon">favorite</mat-icon>
+            </button>
+        </ng-template>
+    </mat-card-actions>
+</mat-card>
