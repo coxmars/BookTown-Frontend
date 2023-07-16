@@ -11,6 +11,7 @@ import { BookCardComponent } from './shared/book-card/book-card.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 
 
@@ -22,7 +23,8 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     BookCardComponent,
     BookDetailComponent,
     CartComponent,
-    WishlistComponent
+    WishlistComponent,
+    OrderDetailComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="fw-bold mt-5">Cart</h1>
+    <h2 class="fw-bold mt-5">Cart</h2>
     <div class="row mt-3 justify-content-between">
         <div class="col-md-6">
             <div *ngIf="items.length; else cartIsEmptyButton">
@@ -59,12 +59,15 @@
         <div class="col-md-4 col-lg-3">
             <h3 class="fw-bold">Total</h3>
             <div class="fs-2 fw-bold my-3 text-danger"> {{ total | currency }} </div> 
-            <button class="w-100" mat-raised-button color="primary"> 
+            <button class="w-100" mat-raised-button color="primary"
+            [class.spinner]="loading"
+            [disabled]="loading"
+            (click)="pay()"> 
                 <mat-icon>paypal</mat-icon>
-                Pagar con PayPal 
+                Pay with PayPal
             </button> 
             <button class="w-100 mt-3" mat-raised-button color="basic" routerLink="/books"> 
-                Seguir comprando 
+                Keep shopping 
             </button>
         </div>
     </div>
