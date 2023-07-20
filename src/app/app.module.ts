@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatPaginatorIntl } from '@angular/material/paginator';
 
-// Todo lo que se importe aqui se usa en toda la aplicacion, por eso es mejor importar los modulos en los modulos que se usan
+import { NgxWebstorageModule } from 'ngx-webstorage';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthInterceptor } from './auth/helpers/auth.interceptor';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,9 +18,12 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxWebstorageModule.forRoot({ prefix: 'webstorage', separator: '-', caseSensitive: true })
   ],
-  providers:[],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

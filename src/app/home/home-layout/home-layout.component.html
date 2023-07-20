@@ -3,8 +3,8 @@
 
     <button mat-button class="ms-3" routerLink="/">Home</button>
     <button mat-button class="ms-3" routerLink="/books">Books</button>
-    <button mat-button class="ms-3" routerLink="">Learning</button>
-    <button mat-button class="ms-3" routerLink="/admin/books">Administration</button>
+    <button mat-button class="ms-3" routerLink="" *ngIf="!isAdmin() && isAuthenticated()">Learning</button>
+    <button mat-button class="ms-3" routerLink="/admin/books" *ngIf="isAdmin()">Administration</button>
     <button mat-button class="ms-3" routerLink="">Contact Us</button>
 
 
@@ -58,10 +58,10 @@
         </ng-container>
     </mat-menu>
 
-    <button matTooltip="Account" mat-button class="ms-3" [mat-menu-trigger-for]="userMenu">
-        <mat-icon>person</mat-icon> Marco Araya
+    <button matTooltip="Account" mat-button class="ms-3" [mat-menu-trigger-for]="userMenu" *ngIf="isAuthenticated(); else authButtons">
+        <mat-icon>person</mat-icon> {{ currentUser?.firstName }}
     </button>
-
+    
     <mat-menu #userMenu="matMenu">
         <mat-button mat-menu-item>
             <mat-icon>person</mat-icon> Profile
@@ -76,9 +76,19 @@
             <mat-icon>security</mat-icon> Security
         </mat-button>
         <mat-divider></mat-divider>
-        <mat-button mat-menu-item>
+        <mat-button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon> Logout
         </mat-button>
     </mat-menu>
+
+    <ng-template #authButtons>
+        <button mat-button routerLink="auth/login" class="ms-2">
+            Login
+        </button>
+        <button mat-raised-button routerLink="/auth/signup" color="primary" class="ms-2">
+            Register
+        </button>
+    </ng-template>
+
 </mat-toolbar>
 <router-outlet></router-outlet>

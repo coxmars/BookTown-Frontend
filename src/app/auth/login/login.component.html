@@ -1,0 +1,50 @@
+<div class="container py-5">
+
+    <h1 class="fw-bold text-center">Login</h1>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-4">
+
+            <form autocomplete="off" #form="ngForm" (ngSubmit)="login(form)">
+
+                <mat-form-field class="mb-2 d-block" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" placeholder="Email" name="email"
+                        [(ngModel)]="credentials.email"
+                        required
+                        #email="ngModel"
+                    >
+
+                    <mat-error>
+                        <ng-container *ngIf="email.hasError('required')">
+                            This field is required
+                        </ng-container>
+                        <ng-container *ngIf="email.hasError('pattern')">
+                            Must be a valid email address
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mb-2 d-block" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" placeholder="Password" name="password"
+                        [(ngModel)]="credentials.password"
+                        required
+                        #password="ngModel"
+                    >
+                    <mat-error>
+                        <ng-container *ngIf="password.hasError('required')">
+                            This field is required
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="w-100" mat-raised-button color="primary">
+                    Login
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</div>

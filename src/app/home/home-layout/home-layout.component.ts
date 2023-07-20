@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../shared/cart.service';
 import { WishlistService } from '../shared/wishlist.service';
+import { AuthService } from 'src/app/auth/shared/auth.service';
+import { User } from 'src/app/auth/shared/auth.model';
 
 @Component({
   selector: 'app-home-layout',
@@ -9,12 +11,22 @@ import { WishlistService } from '../shared/wishlist.service';
 })
 
 
-export class HomeLayoutComponent {
+export class HomeLayoutComponent implements OnInit {
+
+  currentUser?: User;
 
   constructor(
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private authService: AuthService
   ) { }
+
+
+  ngOnInit(): void {
+    this.authService.getAuthenticationState()
+      .subscribe(user => this.currentUser = user);
+  }
+
 
   // Se usa para mostrar el carrito en la barra de navegación
   get cartItems() {
@@ -36,5 +48,17 @@ export class HomeLayoutComponent {
     return totalPrice;
   }
   
+  // It is used to show the user name in the navigation bar
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
+
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 
 }
